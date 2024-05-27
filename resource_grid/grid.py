@@ -79,7 +79,7 @@ class ressource_grid:
                 
 
 if __name__ == "__main__":
-    rg=ressource_grid(3)
+    rg=ressource_grid(5)
 
     rg.add_slot()
 
@@ -95,4 +95,6 @@ if __name__ == "__main__":
 
     grid = rg.get_allocation_grid()
     rg.print_allocation_grid()
+
+    print(rg.get_slot(0,0).size(3))
     print(grid)
