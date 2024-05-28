@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.widgets import Slider
 
 # Define dimensions
 num_subframes = 10
@@ -57,9 +58,8 @@ for slot in range(total_slots):
 for subframe in range(num_subframes + 1):
     ax.axvline(x=subframe * num_symbols_per_slot * num_slots_per_subframe, color='black', linewidth=2)
 
-
 # Set the limits and grid
-ax.set_xlim(0, total_symbols)
+ax.set_xlim(0, total_symbols//2)  # Initial zoom level
 ax.set_ylim(0, num_prbs)
 ax.set_aspect('equal')
 ax.grid(True, which='both', axis='both', linestyle='--', color='gray')
@@ -73,6 +73,19 @@ ax.legend(handles, labels, loc='upper right')
 plt.title('OFDMA Downlink Resource Grid')
 plt.xlabel('Symbols')
 plt.ylabel('PRBs')
+
+# Slider
+ax_slider = plt.axes([0.2, 0.05, 0.65, 0.03], facecolor='lightgoldenrodyellow')
+slider = Slider(ax_slider, 'X-Axis', 0, total_symbols, valinit=0, valstep=1)
+
+# Update plot function
+def update(val):
+    start = int(slider.val)
+    end = start + total_symbols//2  # Adjust this value to control the zoom level
+    ax.set_xlim(start, end)
+    fig.canvas.draw_idle()
+
+slider.on_changed(update)
 
 # Show the plot
 plt.gca().invert_yaxis()
