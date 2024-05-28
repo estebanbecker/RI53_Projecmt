@@ -12,6 +12,7 @@ def GenListeCom():
     ComTimeStamp=0
     for com_num in range(1, 11):
         com_num += 1
+        
         communication_sizes= np.random.poisson(10, 1)  # Average size of 10 Kbits
 
         sleeptimerandom= np.random.uniform(0,1)
