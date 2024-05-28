@@ -10,13 +10,11 @@ def GenListeCom():
     
     """
     ComTimeStamp=0
-    for com_num in range(1, 11):
+    for com_num in range(0, 10): # Generate 10 communications
         com_num += 1
-        
         communication_sizes= np.random.poisson(10, 1)  # Average size of 10 Kbits
-
-        sleeptimerandom= np.random.uniform(0,1)
-        ComTimeStamp+=sleeptimerandom
+        sleeptimerandom= np.random.uniform(0,1) # Random sleep time between 0 and 1 second 
+        ComTimeStamp+=sleeptimerandom # Add the sleep time to the timestamp, next com will be spawned after the sleep time + the previous timestamp
 
         print("Com Num:", com_num, "| Size:", communication_sizes,"Kbits"," | Spawning Time:", round(ComTimeStamp,2),"s", "| Sleep Time:", round(sleeptimerandom,2),"s")
         print("--------------------------------------")
