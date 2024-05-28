@@ -83,10 +83,12 @@ class slot:
 if __name__ == "__main__":
     rg = slot(0,0)
 
+    print("Initial slot (0,0):")
     rg.print()
 
     rg.allocate(8)
 
+    print("Slot after allocation:")
     rg.print()
 
-    print(rg.size())
+    print("Size of the slot if 2 bit per symbole:", rg.size(2))

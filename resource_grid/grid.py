@@ -89,10 +89,15 @@ if __name__ == "__main__":
     rg.assign_user(4, 0, 1)
     rg.assign_user(5, 1, 1)
     
+    print("Printing allocation:")
     rg.print_allocation()
 
+    print("Printing all slots:")
     rg.print_all()
 
-    grid = rg.get_allocation_grid()
+    print("Printing allocation grid:")
     rg.print_allocation_grid()
+    
+    grid = rg.get_allocation_grid()
+    print("Printing grid:")
     print(grid)
