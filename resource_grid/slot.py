@@ -74,7 +74,7 @@ class Slot:
                     self.subcarriers[i][j] = self.user
 
 if __name__ == "__main__":
-    rg = slot(0,0)
+    rg = Slot(0,0)
 
     print("Initial slot (0,0):")
     rg.print()

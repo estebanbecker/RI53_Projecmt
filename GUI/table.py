@@ -2,7 +2,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.widgets import Slider
 
-def plot_resource_grid(states):
+def plot_resource_grid(states: np.ndarray):
+    """Draws a table of the resource_values
+    
+    expects a numpy NDarray with values
+    {
+        -1: 'gray',  # Reserved
+        0: 'white',  # Free
+        0 < : other colors used for each user
+        }"""
+    
     # Infer dimensions from the input states
     num_prbs, total_symbols = states.shape
     num_symbols_per_slot = 7
@@ -35,7 +44,6 @@ def plot_resource_grid(states):
     # Set the ticks and labels
     ax.set_xticks([])
     ax.set_xticklabels([])
-    ax.set_yticklabels([f'PRB {num_prbs - i - 1}' for i in range(num_prbs)])
 
     # Add subframe and slot labels
     for subframe in range(num_subframes):
@@ -69,7 +77,7 @@ def plot_resource_grid(states):
     ax.legend(handles, labels, loc='upper right')
 
     # Title and labels
-    plt.title('OFDMA Downlink Resource Grid')
+    plt.title('OFDMA Downlink Resource Grid', y=1.1)
     plt.xlabel('Symbols')
     plt.ylabel('PRBs')
 
