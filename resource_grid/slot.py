@@ -2,6 +2,7 @@
 #A slot is alwase fully allocated to a single user
 class slot:
     user=0
+    nb_bits_per_symbol=4 #Number of bits per symbol by default is 4 bits so 16QAM
     def __init__(self, place_x, place_y):
         """Créé un slot de la grille de ressources et rajoute les signes réservé par le protocole
         place_x : position en x du slot
@@ -10,17 +11,6 @@ class slot:
         self.subcarriers = [[0 for _ in range(12)] for _ in range(7)]
         
         self.fill_reserved(place_x, place_y)
-
-    def allocate(self, user):
-        """Alloue le slot à un utilisateur
-        user : l'utilisateur à qui allouer le slot
-        """
-        self.user = user
-        
-        for i in range(0, 7):
-            for j in range(0, 12):
-                if(self.subcarriers[i][j] == 0):
-                    self.subcarriers[i][j] = self.user
 
     def fill_reserved(self, place_x, place_y):
         """Rempli les slots réservés par le protocole
@@ -50,9 +40,8 @@ class slot:
         else:
             return 0
     
-    def size(self, byte_per_symbol):
+    def size(self):
         """Retourne la taille du slot en octets utilisable
-        byte_per_symbol : nombre d'octets par symbole
         """
         count=0
         for i in range(0, 7):
@@ -60,7 +49,7 @@ class slot:
                 if(self.subcarriers[i][j] != -1):
                     count+=1
         
-        return count*byte_per_symbol
+        return count*self.nb_bits_per_symbol
 
     def print(self):
         """Affiche le slot
@@ -71,22 +60,28 @@ class slot:
             print()
         print()
 
-    def allocate(self, user):
-    
+    def allocate(self, user, f_nb_bits_per_symbol=4):
+        """Alloue le slot à un utilisateur
+        user : l'utilisateur à qui allouer le slot
+        nb_bits_per_symbol : nombre de bits par symbole, par défaut 4 bits (16QAM)
+        """
         self.user = user
+        self.nb_bits_per_symbol = f_nb_bits_per_symbol
         
         for i in range(0, 7):
             for j in range(0, 12):
-                if(self.subcarriers[i][j] != -1):
+                if(self.subcarriers[i][j] == 0):
                     self.subcarriers[i][j] = self.user
 
 if __name__ == "__main__":
     rg = slot(0,0)
 
+    print("Initial slot (0,0):")
     rg.print()
 
     rg.allocate(8)
 
+    print("Slot after allocation:")
     rg.print()
 
-    print(rg.size())
+    print("Size of the slot if 2 bit per symbole:", rg.size(2))
