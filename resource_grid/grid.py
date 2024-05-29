@@ -18,6 +18,14 @@ class ressource_grid:
         """
         position=len(self.slot_grid)
         self.slot_grid.append([slot(position,i) for i in range(0, self.nb_prb)])
+
+    def add_multiple_slots(self, nb_slots):
+        """
+        Ajoute plusieurs slots à la grille de ressources
+        nb_slots : nombre de slots à ajouter
+        """
+        for i in range(0, nb_slots):
+            self.add_slot()
     
     def print_all(self):
         """
@@ -28,14 +36,14 @@ class ressource_grid:
                 print("Slot ", i, " PRB ", j)
                 self.slot_grid[i][j].print()
 
-    def assign_user(self, user, prb, slot):
+    def assign_user(self, user, prb, slot, nb_bits_per_symbol=4):
         """
         Alloue un slot à un utilisateur
         user : l'utilisateur à qui allouer le slot
         prb : le PRB à allouer
         slot : le slot à allouer
         """
-        self.slot_grid[slot][prb].allocate(user)
+        self.slot_grid[slot][prb].allocate(user, nb_bits_per_symbol)
 
     def print_allocation(self):
         """
@@ -54,6 +62,22 @@ class ressource_grid:
         """
         return self.slot_grid[slot][prb]
     
+    def get_size_slot(self, slot, prb):
+        """
+        Retourne la taille d'un slot
+        slot : le slot à retourner
+        prb : le PRB à retourner
+        """
+        return self.slot_grid[slot][prb].size()
+    
+    def get_user_slot(self, slot, prb):
+        """
+        Retourne l'utilisateur d'un slot
+        slot : le slot à retourner
+        prb : le PRB à retourner
+        """
+        return self.slot_grid[slot][prb].user
+    
     def get_allocation_grid(self):
         """
         Retourne la grille de ressources simplifié par slot
@@ -68,36 +92,92 @@ class ressource_grid:
         Affiche la grille de ressources simplifié par slot
         """
         grid = self.get_allocation_grid()
+        self.print_grid(grid)
+
+    def print_grid(self,grid):
+        """
+        Affiche une grille de ressources
+        grid : la grille de ressources à afficher
+        """
+
         for i in range(0, len(grid[0])):
             for j in range(0, len(grid)):
                 print(grid[j][i], end=' ')
             print()
-        
+    
+    def get_full_allocation_grid(self):
+        """
+        Retourne la grille de ressources complète
+        """
+        grid = []
+        for i in range(0, len(self.slot_grid)*7):
+            row= []
+            for j in range(0, self.nb_prb*12):
+                row.append(self.slot_grid[i//7][j//12].subcarriers[i%7][j%12])
+            grid.append(row)
+        return grid
+    
+    def print_full_allocation_grid(self):
+        """
+        Affiche la grille de ressources complète
+        """
+        grid = self.get_full_allocation_grid()
+        self.print_grid(grid)
+    
 
 
     
                 
 
 if __name__ == "__main__":
-    rg=ressource_grid(3)
+    # Create a resource grid object
+    grid = ressource_grid(5)
 
-    rg.add_slot()
+    # Add slots to the grid
+    grid.add_multiple_slots(3)
 
-    rg.assign_user(1, 0, 0)
-    rg.assign_user(2, 1, 0)
-    rg.assign_user(3, 2, 0)
-    rg.assign_user(4, 0, 1)
-    rg.assign_user(5, 1, 1)
+    # Assign a user to a slot
+    grid.assign_user(5, 1, 1, 5)
+
+    # Assign more users to slots
+    grid.assign_user(10, 0, 2, 4)
+    grid.assign_user(15, 2, 0, 2)
+    grid.assign_user(20, 1, 3, 1)
+    grid.assign_user(25, 3, 1, 3)
+
+    # Print all slots in the grid
+    grid.print_all()
+
+    # Print the allocation of users to slots
+    grid.print_allocation()
+
+    # Get a specific slot from the grid
+    slot = grid.get_slot(0, 2)
+    print("Slot 0 PRB 2:", slot)
+
+    slot = grid.get_slot(1, 1)
+    print("Slot 1 PRB 1:", slot)
+
+    # Get the size of a slot
+    size = grid.get_size_slot(0, 2)
+    print("Size of Slot 0 PRB 2:", size)
+
+    size = grid.get_size_slot(1, 1)
+    print("Size of Slot 1 PRB 1:", size)
+
+    # Get the user assigned to a slot
+    user = grid.get_user_slot(0, 2)
+    print("User assigned to Slot 0 PRB 2:", user)
     
-    print("Printing allocation:")
-    rg.print_allocation()
+    user = grid.get_user_slot(1, 1)
+    print("User assigned to Slot 1 PRB 1:", user)
 
-    print("Printing all slots:")
-    rg.print_all()
+    # Get the simplified allocation grid
+    allocation_grid = grid.get_allocation_grid()
+    print("Simplified Allocation Grid:")
+    grid.print_allocation_grid()
 
-    print("Printing allocation grid:")
-    rg.print_allocation_grid()
-    
-    grid = rg.get_allocation_grid()
-    print("Printing grid:")
-    print(grid)
+    # Get the full allocation grid
+    full_allocation_grid = grid.get_full_allocation_grid()
+    print("Full Allocation Grid:")
+    grid.print_full_allocation_grid()
