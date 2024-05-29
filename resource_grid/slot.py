@@ -1,6 +1,6 @@
 #Represent a slot in the resource grid
 #A slot is alwase fully allocated to a single user
-class slot:
+class Slot:
     user=0
     nb_bits_per_symbol=4 #Number of bits per symbol by default is 4 bits so 16QAM
     def __init__(self, place_x, place_y):

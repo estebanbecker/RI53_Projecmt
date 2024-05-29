@@ -1,6 +1,7 @@
 #An allocation grid for LTE communication resources in downlink
 
-from slot import slot
+from .slot import Slot
+import numpy as np
 
 class ressource_grid:
 
@@ -10,14 +11,14 @@ class ressource_grid:
         nb_prb : nombre de PRB utilisable
         """
         self.nb_prb = nb_prb
-        self.slot_grid = [[slot(0,i) for i in range(0, nb_prb)]]
+        self.slot_grid = [[Slot(0,i) for i in range(0, nb_prb)]]
 
     def add_slot(self):
         """
         Ajoute un slot à la grille de ressources
         """
         position=len(self.slot_grid)
-        self.slot_grid.append([slot(position,i) for i in range(0, self.nb_prb)])
+        self.slot_grid.append([Slot(position,i) for i in range(0, self.nb_prb)])
 
     def add_multiple_slots(self, nb_slots):
         """
@@ -127,7 +128,21 @@ class ressource_grid:
 
 
     
-                
+def generate():
+    grid = ressource_grid(5)
+    grid.add_multiple_slots(3)
+    # Assign a user to a slot
+    grid.assign_user(5, 1, 1, 5)
+
+    # Assign more users to slots
+    grid.assign_user(10, 0, 2, 4)
+    grid.assign_user(15, 2, 0, 2)
+    grid.assign_user(20, 1, 3, 1)
+    grid.assign_user(25, 3, 1, 3)
+    
+    return np.array(grid.get_full_allocation_grid(), dtype=int)
+
+    
 
 if __name__ == "__main__":
     # Create a resource grid object

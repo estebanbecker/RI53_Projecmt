@@ -1,24 +1,13 @@
-import PySimpleGUI as sg
+from GUI import settings, table
+from resource_grid import grid
 
-sg.theme("DarkAmber")
+setting_values = settings.settings()
 
-param = [[sg.Text("frequence"), sg.Input(default_text=10, size=(4,1))],
-         [sg.Text("communication"), sg.Input(size=(4,1))],
-         [sg.Text("moyenne d'arrivée"), sg.Input(size=(4,1))],
-         [sg.Text("Ecart-type"), sg.Input(size=(4,1))],
-         [sg.Text("tailles des communication"), sg.Input(size=(4,1))],
-         [sg.Text("taille moyenne"), sg.Input(size=(4,1))],
-         [sg.Text("ecart-Type"), sg.Input(size=(4,1))],
-         [sg.Ok(key="-Generate-"), sg.Cancel(key="-CANCEL-")]]
+# generate values with settings values
+#
+# ...
+#
 
-layout = [[sg.Column(param)]]
+# temporary values for test
 
-window = sg.Window("OFDMA downlink simulation", layout)
-
-while True:
-    event, values = window.read()
-    
-    if event == sg.WIN_CLOSED or event == "-CANCEL-":
-        break
-
-window.close()
+table.plot_resource_grid(grid.generate())
