@@ -1,9 +1,13 @@
 #An allocation grid for LTE communication resources in downlink
 
-from .slot import Slot
+try:
+    from .slot import Slot  # Try to import with relative import
+except ImportError:
+    from slot import Slot
+
 import numpy as np
 
-class ressource_grid:
+class Ressource_grid:
 
     slot_grid=[]
     def __init__(self, nb_prb):
@@ -118,6 +122,14 @@ class ressource_grid:
             grid.append(row)
         return grid
     
+    def get_full_allocation_grid_np(self):
+        """
+        Retourne la grille de ressources complète sous forme de tableau numpy
+        """
+        grid = np.array(self.get_full_allocation_grid(), dtype=int)
+
+        return np.flipud(grid.T)
+    
     def print_full_allocation_grid(self):
         """
         Affiche la grille de ressources complète
@@ -129,7 +141,10 @@ class ressource_grid:
 
     
 def generate():
-    grid = ressource_grid(5)
+    """
+    Generate a resource grid for testing purposes
+    """
+    grid = Ressource_grid(5)
     grid.add_multiple_slots(3)
     # Assign a user to a slot
     grid.assign_user(5, 1, 1, 5)
@@ -140,13 +155,13 @@ def generate():
     grid.assign_user(20, 1, 3, 1)
     grid.assign_user(25, 3, 1, 3)
     
-    return np.array(grid.get_full_allocation_grid(), dtype=int)
+    return grid.get_full_allocation_grid_np()
 
     
 
 if __name__ == "__main__":
     # Create a resource grid object
-    grid = ressource_grid(5)
+    grid = Ressource_grid(5)
 
     # Add slots to the grid
     grid.add_multiple_slots(3)
