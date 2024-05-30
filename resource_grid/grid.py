@@ -2,34 +2,34 @@
 
 from slot import slot
 
-class ressource_grid:
+class Ressource_grid:
 
     slot_grid=[]
     def __init__(self, nb_prb):
-        """Créé une grille de ressources
-        nb_prb : nombre de PRB utilisable
+        """Creates a resource grid
+        nb_prb: number of usable PRBs
         """
         self.nb_prb = nb_prb
         self.slot_grid = [[slot(0,i) for i in range(0, nb_prb)]]
 
     def add_slot(self):
         """
-        Ajoute un slot à la grille de ressources
+        Adds a slot to the resource grid
         """
         position=len(self.slot_grid)
         self.slot_grid.append([slot(position,i) for i in range(0, self.nb_prb)])
 
     def add_multiple_slots(self, nb_slots):
         """
-        Ajoute plusieurs slots à la grille de ressources
-        nb_slots : nombre de slots à ajouter
+        Adds multiple slots to the resource grid
+        nb_slots: number of slots to add
         """
         for i in range(0, nb_slots):
             self.add_slot()
     
     def print_all(self):
         """
-        Affiche tous les slot de la grille de ressources
+        Prints all slots in the resource grid
         """
         for i in range(0, len(self.slot_grid)):
             for j in range(0, self.nb_prb):
@@ -38,16 +38,16 @@ class ressource_grid:
 
     def assign_user(self, user, prb, slot, nb_bits_per_symbol=4):
         """
-        Alloue un slot à un utilisateur
-        user : l'utilisateur à qui allouer le slot
-        prb : le PRB à allouer
-        slot : le slot à allouer
+        Allocates a slot to a user
+        user: the user to allocate the slot to
+        prb: the PRB to allocate
+        slot: the slot to allocate
         """
         self.slot_grid[slot][prb].allocate(user, nb_bits_per_symbol)
 
     def print_allocation(self):
         """
-        Affiche les utilisateurs alloués à chaque slot
+        Prints the users allocated to each slot
         """
         for i in range(0, len(self.slot_grid)):
             for j in range(0, self.nb_prb):
@@ -56,31 +56,31 @@ class ressource_grid:
 
     def get_slot(self, slot,prb):
         """
-        Retourne un slot de la grille de ressources
-        slot : le slot à retourner
-        prb : le PRB à retourner
+        Returns a slot from the resource grid
+        slot: the slot to return
+        prb: the PRB to return
         """
         return self.slot_grid[slot][prb]
     
     def get_size_slot(self, slot, prb):
         """
-        Retourne la taille d'un slot
-        slot : le slot à retourner
-        prb : le PRB à retourner
+        Returns the size of a slot
+        slot: the slot to return
+        prb: the PRB to return
         """
         return self.slot_grid[slot][prb].size()
     
     def get_user_slot(self, slot, prb):
         """
-        Retourne l'utilisateur d'un slot
-        slot : le slot à retourner
-        prb : le PRB à retourner
+        Returns the user assigned to a slot
+        slot: the slot to return
+        prb: the PRB to return
         """
         return self.slot_grid[slot][prb].user
     
     def get_allocation_grid(self):
         """
-        Retourne la grille de ressources simplifié par slot
+        Returns the allocation grid simplified by slot
         """
         grid = []
         for i in range(0, len(self.slot_grid)):
@@ -89,15 +89,17 @@ class ressource_grid:
     
     def print_allocation_grid(self):
         """
-        Affiche la grille de ressources simplifié par slot
+        Prints the allocation grid simplified by slot
         """
         grid = self.get_allocation_grid()
         self.print_grid(grid)
 
-    def print_grid(self,grid):
+    def print_grid(self, grid):
         """
-        Affiche une grille de ressources
-        grid : la grille de ressources à afficher
+        Prints a resource grid.
+        
+        Args:
+            grid (list): The resource grid to be printed.
         """
 
         for i in range(0, len(grid[0])):
@@ -107,7 +109,7 @@ class ressource_grid:
     
     def get_full_allocation_grid(self):
         """
-        Retourne la grille de ressources complète
+        Returns the complete resource grid
         """
         grid = []
         for i in range(0, len(self.slot_grid)*7):
@@ -119,7 +121,55 @@ class ressource_grid:
     
     def print_full_allocation_grid(self):
         """
-        Affiche la grille de ressources complète
+        Prints the complete resource grid
+        """
+        grid = self.get_full_allocation_grid()
+        self.print_grid(grid)
+    
+    def get_allocation_grid(self):
+        """
+        Returns the allocation grid simplified by slot
+        """
+        grid = []
+        for i in range(0, len(self.slot_grid)):
+            grid.append([self.slot_grid[i][j].user for j in range(0, self.nb_prb)])
+        return grid
+    
+    def print_allocation_grid(self):
+        """
+        Prints the allocation grid simplified by slot
+        """
+        grid = self.get_allocation_grid()
+        self.print_grid(grid)
+
+    def print_grid(self, grid):
+        """
+        Prints a resource grid.
+        
+        Args:
+            grid (list): The resource grid to be printed.
+        """
+
+        for i in range(0, len(grid[0])):
+            for j in range(0, len(grid)):
+                print(grid[j][i], end=' ')
+            print()
+    
+    def get_full_allocation_grid(self):
+        """
+        Returns the complete resource grid
+        """
+        grid = []
+        for i in range(0, len(self.slot_grid)*7):
+            row= []
+            for j in range(0, self.nb_prb*12):
+                row.append(self.slot_grid[i//7][j//12].subcarriers[i%7][j%12])
+            grid.append(row)
+        return grid
+    
+    def print_full_allocation_grid(self):
+        """
+        Prints the complete resource grid
         """
         grid = self.get_full_allocation_grid()
         self.print_grid(grid)
@@ -131,7 +181,7 @@ class ressource_grid:
 
 if __name__ == "__main__":
     # Create a resource grid object
-    grid = ressource_grid(5)
+    grid = Ressource_grid(5)
 
     # Add slots to the grid
     grid.add_multiple_slots(3)
