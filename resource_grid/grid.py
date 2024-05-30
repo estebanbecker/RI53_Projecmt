@@ -1,6 +1,11 @@
 #An allocation grid for LTE communication resources in downlink
 
-from slot import slot
+try:
+    from .slot import Slot  # Try to import with relative import
+except ImportError:
+    from slot import Slot
+
+import numpy as np
 
 class Ressource_grid:
 
@@ -10,14 +15,14 @@ class Ressource_grid:
         nb_prb: number of usable PRBs
         """
         self.nb_prb = nb_prb
-        self.slot_grid = [[slot(0,i) for i in range(0, nb_prb)]]
+        self.slot_grid = [[Slot(0,i) for i in range(0, nb_prb)]]
 
     def add_slot(self):
         """
         Adds a slot to the resource grid
         """
         position=len(self.slot_grid)
-        self.slot_grid.append([slot(position,i) for i in range(0, self.nb_prb)])
+        self.slot_grid.append([Slot(position,i) for i in range(0, self.nb_prb)])
 
     def add_multiple_slots(self, nb_slots):
         """
@@ -119,6 +124,14 @@ class Ressource_grid:
             grid.append(row)
         return grid
     
+    def get_full_allocation_grid_np(self):
+        """
+        Return the complete resource grid as a numpy array
+        """
+        grid = np.array(self.get_full_allocation_grid(), dtype=int)
+
+        return np.flipud(grid.T)
+    
     def print_full_allocation_grid(self):
         """
         Prints the complete resource grid
@@ -167,6 +180,14 @@ class Ressource_grid:
             grid.append(row)
         return grid
     
+    def get_full_allocation_grid_np(self):
+        """
+        Retourne la grille de ressources complète sous forme de tableau numpy
+        """
+        grid = np.array(self.get_full_allocation_grid(), dtype=int)
+
+        return np.flipud(grid.T)
+    
     def print_full_allocation_grid(self):
         """
         Prints the complete resource grid
@@ -174,10 +195,34 @@ class Ressource_grid:
         grid = self.get_full_allocation_grid()
         self.print_grid(grid)
     
-
+def random_allocation(grid, nb_assignations, nb_users):
+    """
+    Assign random users to slots
+    grid : the resource grid to assign users to
+    nb_assignations : the number of assignations to make
+    nb_users : the number of users to assign
+    """
+    import random
+    for i in range(0, nb_assignations):
+        user = random.randint(1, nb_users)
+        prb = random.randint(0, grid.nb_prb-1)
+        slot = random.randint(0, len(grid.slot_grid)-1)
+        grid.assign_user(user, prb, slot, random.randint(1, 6))
+    return grid
+    
 
     
-                
+def generate():
+    """
+    Generate a resource grid for testing purposes
+    """
+    grid = Ressource_grid(5)
+    grid.add_multiple_slots(19)
+    grid= random_allocation(grid,300, 7)
+    
+    return grid.get_full_allocation_grid_np()
+
+    
 
 if __name__ == "__main__":
     # Create a resource grid object
