@@ -49,7 +49,7 @@ def plot_resource_grid(states: np.ndarray):
     for subframe in range(num_subframes):
         subframe_label = f'Subframe {subframe}'
         subframe_x_pos = subframe * num_symbols_per_slot * num_slots_per_subframe + num_symbols_per_slot * num_slots_per_subframe / 2
-        ax.text(subframe_x_pos, num_prbs + 1, subframe_label, ha='center', va='bottom', fontsize=10, weight='bold')
+        ax.text(subframe_x_pos, num_prbs + 2, subframe_label, ha='center', va='bottom', fontsize=10, weight='bold')
         for slot in range(num_slots_per_subframe):
             slot_index = subframe * num_slots_per_subframe + slot
             slot_label = f'Slot {slot}'
