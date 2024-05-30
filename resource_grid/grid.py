@@ -137,7 +137,21 @@ class Ressource_grid:
         grid = self.get_full_allocation_grid()
         self.print_grid(grid)
     
-
+def random_allocation(grid, nb_assignations, nb_users):
+    """
+    Assign random users to slots
+    grid : the resource grid to assign users to
+    nb_assignations : the number of assignations to make
+    nb_users : the number of users to assign
+    """
+    import random
+    for i in range(0, nb_assignations):
+        user = random.randint(1, nb_users)
+        prb = random.randint(0, grid.nb_prb-1)
+        slot = random.randint(0, len(grid.slot_grid)-1)
+        grid.assign_user(user, prb, slot, random.randint(1, 6))
+    return grid
+    
 
     
 def generate():
@@ -145,15 +159,8 @@ def generate():
     Generate a resource grid for testing purposes
     """
     grid = Ressource_grid(5)
-    grid.add_multiple_slots(3)
-    # Assign a user to a slot
-    grid.assign_user(5, 1, 1, 5)
-
-    # Assign more users to slots
-    grid.assign_user(10, 0, 2, 4)
-    grid.assign_user(15, 2, 0, 2)
-    grid.assign_user(20, 1, 3, 1)
-    grid.assign_user(25, 3, 1, 3)
+    grid.add_multiple_slots(19)
+    grid= random_allocation(grid,300, 7)
     
     return grid.get_full_allocation_grid_np()
 
