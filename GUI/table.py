@@ -11,6 +11,8 @@ def plot_resource_grid(states: np.ndarray):
         0: 'white',  # Free
         0 < : other colors used for each user
         }"""
+        
+    zoom_level = 84
     
     # Infer dimensions from the input states
     num_prbs, total_symbols = states.shape
@@ -66,7 +68,7 @@ def plot_resource_grid(states: np.ndarray):
         ax.axvline(x=subframe * num_symbols_per_slot * num_slots_per_subframe, color='black', linewidth=2)
 
     # Set the limits and grid
-    ax.set_xlim(0, total_symbols // 2)  # Initial zoom level
+    ax.set_xlim(0, zoom_level)  # Initial zoom level
     ax.set_ylim(0, num_prbs)
     ax.set_aspect('equal')
     ax.grid(True, which='both', axis='both', linestyle='--', color='gray')
@@ -88,7 +90,7 @@ def plot_resource_grid(states: np.ndarray):
     # Update plot function
     def update(val):
         start = int(slider.val)
-        end = start + total_symbols // 2  # Adjust this value to control the zoom level
+        end = start + zoom_level  # Adjust this value to control the zoom level
         ax.set_xlim(start, end)
         fig.canvas.draw_idle()
 
