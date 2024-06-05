@@ -50,6 +50,8 @@ class Ressource_grid:
         """
         self.slot_grid[slot][prb].allocate(user, nb_bits_per_symbol)
 
+        return self.get_size_slot(slot, prb)
+
     def print_allocation(self):
         """
         Prints the users allocated to each slot
