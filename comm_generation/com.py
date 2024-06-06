@@ -1,7 +1,7 @@
 import numpy as np
 import time
 
-def GenListeCom():
+def GenListeCom(settings_values=None):
     """
     Generate a list of communications with random sizes and random time between communications (Poisson law)
 
@@ -9,12 +9,36 @@ def GenListeCom():
         List[Dict]: A list of dictionaries containing communication information
     
     """
+    if settings_values is  None:
+        return Gen()
+    
+    else:
+
+        return Gen(settings_values[1], settings_values[2], settings_values[3])
+
+
+def Gen(nbr_com=10,max_time=1,avg_size=10):
+    if nbr_com == '':
+        nbr_com = 10
+    else:
+        nbr_com = int(nbr_com)
+
+    if max_time == '':
+        max_time = 1
+    else:
+        max_time = int(max_time)
+
+    if avg_size == '':
+        avg_size = 10
+    else:
+        avg_size = int(avg_size)
+    
     ComTimeStamp=0
     all_communication_info = []
-    for com_num in range(0, 10): # Generate 10 communications
+    for com_num in range(0, nbr_com): # Generate 10 communications
         com_num += 1
-        communication_sizes= np.random.poisson(10, 1)  # Average size of 10 Kbits
-        sleeptimerandom= np.random.uniform(0,1) # Random sleep time between 0 and 1 second 
+        communication_sizes= np.random.poisson(avg_size, 1)  # Average size of 10 Kbits
+        sleeptimerandom= np.random.uniform(0,max_time) # Random sleep time between 0 and 1 second 
         ComTimeStamp+=sleeptimerandom # Add the sleep time to the timestamp, next com will be spawned after the sleep time + the previous timestamp
         communication_quality = np.random.choice([1, 2, 4, 5, 6, 8], 1)[0] # Random quality between BPSK, QPSK, 16QAM, 32QAM, 64QAM, 256QAM
 
@@ -31,5 +55,7 @@ def GenListeCom():
         }
         
         all_communication_info.append(com_info)
-    
+
     return all_communication_info
+
+
