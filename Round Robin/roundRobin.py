@@ -18,8 +18,6 @@ def round_robin(packets, quantum):
             current_packet.remaining_time -= execution_time
             time += execution_time
 
-            print(f"Time {time}: Packet {current_packet.packet_id} executed for {execution_time} units, remaining time: {current_packet.remaining_time}")
-
             if current_packet.remaining_time > 0:
                 queue.append(current_packet)
             else:
@@ -27,9 +25,7 @@ def round_robin(packets, quantum):
         else:
             time += 1  # Si la file d'attente est vide, avancez le temps
 
-    print("All packets have been processed:")
-    for packet in completed_packets:
-        print(packet)
+    return completed_packets
 
 if __name__ == "__main__":
     quantum = 3
