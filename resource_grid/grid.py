@@ -47,6 +47,8 @@ class Ressource_grid:
         user: the user to allocate the slot to
         prb: the PRB to allocate
         slot: the slot to allocate
+
+        return: the size of the slot
         """
         self.slot_grid[slot][prb].allocate(user, nb_bits_per_symbol)
 
