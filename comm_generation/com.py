@@ -14,7 +14,7 @@ def GenListeCom(settings_values=None):
     
     else:
 
-        return Gen(settings_values[1], settings_values[2], settings_values[3])
+        return Gen(settings_values["com"], settings_values["interval"], settings_values["av_size"])
 
 
 def Gen(nbr_com=10,max_time=1,avg_size=10):
