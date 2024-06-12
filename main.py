@@ -9,7 +9,7 @@ if __name__ == "__main__":
     ListeOfAllCom = GenListeCom(settings_values=setting_values)
 
     for com in ListeOfAllCom:
-        print("Com Num:", com["Com_Num"], "| Size:", com["Size_Kbits"],"Kbits"," | Com quality:",com["Quality_bits_per_symbol"], "bits/symbol | Spawning Time:", com["Spawning_Time_s"],"s", "| Sleep Time:", com["Sleep_Time_s"],"s")
+        print("Com Num:", com["Com_Num"], "| Size:", com["Size_bits"],"bits"," | Com quality:",com["Quality_bits_per_symbol"], "bits/symbol | Spawning Time:", com["Spawning_Time_s"],"s", "| Sleep Time:", com["Sleep_Time_s"],"s")
 
 
     # generate values with settings values
