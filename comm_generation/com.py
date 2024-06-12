@@ -37,7 +37,7 @@ def Gen(nbr_com=10,max_time=1,avg_size=10):
     all_communication_info = []
     for com_num in range(0, nbr_com): # Generate 10 communications
         com_num += 1
-        communication_sizes= np.random.poisson(avg_size, 1)  # Average size of 10 Kbits
+        communication_sizes= np.random.poisson(avg_size, 1)[0]  # Average size of 10 Kbits
         sleeptimerandom= np.random.uniform(0,max_time) # Random sleep time between 0 and 1 second 
         ComTimeStamp+=sleeptimerandom # Add the sleep time to the timestamp, next com will be spawned after the sleep time + the previous timestamp
         communication_quality = np.random.choice([1, 2, 4, 5, 6, 8], 1)[0] # Random quality between BPSK, QPSK, 16QAM, 32QAM, 64QAM, 256QAM
