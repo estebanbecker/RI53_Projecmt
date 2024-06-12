@@ -9,7 +9,7 @@ def settings() -> dict:
             [sg.Text("Temps Max entre 2 com (def : 1s)"), sg.Input(size=(4,1))], 
             #[sg.Text("Ecart-type"), sg.Input(size=(4,1))],
             #[sg.Text("tailles des communication"), sg.Input(size=(4,1))],
-            [sg.Text("taille moyenne des comm (def : 10kbts)"), sg.Input(size=(4,1))],
+            [sg.Text("taille moyenne des comm (def : 500 bts)"), sg.Input(size=(4,1))],
             #[sg.Text("ecart-Type"), sg.Input(size=(4,1))],
             [sg.Ok(key="-Generate-"), sg.Cancel(key="-CANCEL-")]]
 
