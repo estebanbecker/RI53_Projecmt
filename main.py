@@ -14,5 +14,6 @@ if __name__ == "__main__":
 
     allocation_grid = roundRobin.round_robin(list_com, int(setting_values["RB"]))
 
+    print("Generating communications")
     table.plot_resource_grid(allocation_grid.get_full_allocation_grid_np())
-    # print("Generating communications")
+
