@@ -40,7 +40,7 @@ class Slot:
         else:
             return 0
     
-    def size(self, nb_bits_per_symbol=4):
+    def size(self):
         """Returns the size of the slot in usable bytes
         """
         count=0
