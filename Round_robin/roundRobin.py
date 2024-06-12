@@ -17,8 +17,8 @@ def round_robin(communications, nb_prb):
         
         if queue:
             current_comm = queue.pop(0)
-            execution_time = min(current_comm['Size_Kbits'], 3)
-            current_comm['Size_Kbits'] -= execution_time
+            execution_time = min(current_comm['Size_bits'], 3)
+            current_comm['Size_bits'] -= execution_time
             time += execution_time
 
             # Convertir Kbits en bits et assigner l'utilisateur dans la grille
@@ -38,7 +38,7 @@ def round_robin(communications, nb_prb):
                 bits_allocated += bits_in_current_prb
                 current_prb += 1
 
-            if current_comm['Size_Kbits'] > 0:
+            if current_comm['Size_bits'] > 0:
                 queue.append(current_comm)
             else:
                 completed_communications.append(current_comm)

@@ -47,6 +47,7 @@ class Ressource_grid:
         user: the user to allocate the slot to
         prb: the PRB to allocate
         slot: the slot to allocate
+        nb_bits_per_symbol: the number of bits per symbol to allocate
 
         return: the size of the slot
         """
