@@ -25,6 +25,7 @@ def round_robin(communications, nb_prb):
             current_slot += 1
             allocation_grid.add_slot()
 
+        #Allocation des communications à la grille
         size_before_allocation = current_comm['Size_bits']
         size_after_allocation = size_before_allocation - allocation_grid.assign_user(current_comm['Com_Num'], current_prb, current_slot, bits_per_symbol)
         current_comm['Size_bits'] = max(size_after_allocation, 0) 
