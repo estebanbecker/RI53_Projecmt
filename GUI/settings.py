@@ -26,10 +26,15 @@ def settings() -> dict:
             exit()
         
         if event == "-Generate-":
-            setting_values = values
+            setting_values: dict = values
+            
+            if not all(setting_values.values()):
+                sg.popup("Please fill in all the fields")
+                continue
             
             bandwidth_rb = {1.4: 6, 3: 15, 5: 25, 10: 50, 15: 75, 20: 100}
             setting_values["RB"] = bandwidth_rb[setting_values["bandwidth"]]
+            
             break
             
 
