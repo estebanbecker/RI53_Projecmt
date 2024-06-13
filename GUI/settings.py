@@ -6,11 +6,11 @@ def settings() -> dict:
     sg.theme("DarkAmber")
 
     param = [[sg.Text("Bandwidth in MHz: "), sg.Combo([1.4, 3, 5, 10, 15, 20],default_value=1.4, size=(4,1), key="bandwidth")], 
-            [sg.Text("Nombre de communications"), sg.Input(size=(4,1), key="com", default_text=10)], 
-            [sg.Text("Temps Max entre 2 com (def : 1s)"), sg.Input(size=(4,1), key="interval", default_text=1)], 
+            [sg.Text("Number of communications"), sg.Input(size=(4,1), key="com", default_text=10)], 
+            [sg.Text("Max time between 2 coms (def : 1s)"), sg.Input(size=(4,1), key="interval", default_text=1)], 
             #[sg.Text("Ecart-type"), sg.Input(size=(4,1))],
             #[sg.Text("tailles des communication"), sg.Input(size=(4,1))],
-            [sg.Text("taille moyenne des comm (def : 500bits)"), sg.Input(size=(4,1), key="av_size", default_text=500)],
+            [sg.Text("Average size of a com (def : 500bits)"), sg.Input(size=(4,1), key="av_size", default_text=500)],
             #[sg.Text("ecart-Type"), sg.Input(size=(4,1))],
             [sg.Ok(key="-Generate-"), sg.Cancel(key="-CANCEL-")]]
 
